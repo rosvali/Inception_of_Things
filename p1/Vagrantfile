@@ -1,25 +1,26 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "centos/7"
+  config.vm.box_url = "https://app.vagrantup.com/centos/boxes/7"
   config.vbguest.installer_options = { allow_kernel_upgrade: true }
 
   NODES = [
-    { :hostname => "raguilloS", :ip => "192.168.42.110", :cpus => 1, :memory => 512, :path => "server.sh"},
-    { :hostname => "raguilloSW", :ip => "192.168.42.111", :cpus => 1, :memory => 512, :path => "server_worker.sh"}
+    { :hostname => "raguilloS", :ip => "192.168.42.110", :cpus => 1, :memory => 1024, :spath =>  "./server.sh"},
+    { :hostname => "raguilloSW", :ip => "192.168.42.111", :cpus => 1, :memory => 512, :spath =>  "./server_worker.sh"}
   ]
 
   NODES.each do |node|
     config.vm.define node[:hostname] do |config|
       config.vm.hostname = node[:hostname]
       config.vm.network "private_network", ip: node[:ip]
-
-      config.vm.provider "virtualbox" do |v|
-        v.name = node[:hostname]
-        v.cpus = node[:cpus]
-        v.memory = node[:memory]
+      config.vm.synced_folder ".", "/vagrant", type: "virtualbox", SharedFoldersEnableSymlinksCreate: true
+      config.vm.provision "shell", path: node[:spath], privileged: true, args: node[:ip]
+      config.vm.provider "virtualbox" do |vb|
+        vb.name = node[:hostname]
+        vb.cpus = node[:cpus]
+        vb.memory = node[:memory]
+        vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+        vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       end
-
-      config.vm.provision "shell", privileged: true, path: node[:path]
-      config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
     end
   end
 end
