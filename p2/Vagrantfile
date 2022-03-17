@@ -1,0 +1,26 @@
+Vagrant.configure("2") do |config|
+  config.vm.box = "centos/7"
+  config.vm.box_url = "https://app.vagrantup.com/centos/boxes/7"
+  config.vbguest.installer_options = { allow_kernel_upgrade: true }
+
+  NODES = [
+    { :hostname => "grobertoS", :ip => "192.168.42.110", :cpus => '4', :memory => '1024', :path => "server.sh"}
+  ]
+
+  NODES.each do |node|
+    config.vm.network "forwarded_port", guest: 6443, host: 6443, auto_correct: true
+    config.vm.define node[:hostname] do |config|
+      config.vm.hostname = node[:hostname]
+      config.vm.network "private_network", ip: node[:ip]
+
+      config.vm.provider "virtualbox" do |v|
+        v.name = node[:hostname]
+        v.cpus = node[:cpus]
+        v.memory = node[:memory]
+      end
+
+      config.vm.provision "shell", privileged: true, path: node[:path]
+      config.vm.synced_folder ".", "/vagrant", type: "virtualbox"
+    end
+  end
+end
