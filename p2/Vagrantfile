@@ -4,11 +4,11 @@ Vagrant.configure("2") do |config|
   config.vbguest.installer_options = { allow_kernel_upgrade: true }
 
   NODES = [
-    { :hostname => "grobertoS", :ip => "192.168.42.110", :cpus => '4', :memory => '1024', :path => "server.sh"}
+    { :hostname => "grobertoS", :ip => "192.168.42.110", :cpus => '2', :memory => '2024', :path => "server.sh"}
   ]
 
   NODES.each do |node|
-    config.vm.network "forwarded_port", guest: 6443, host: 6443, auto_correct: true
+    # config.vm.network "forwarded_port", guest: 6443, host: 6443, auto_correct: true
     config.vm.define node[:hostname] do |config|
       config.vm.hostname = node[:hostname]
       config.vm.network "private_network", ip: node[:ip]
