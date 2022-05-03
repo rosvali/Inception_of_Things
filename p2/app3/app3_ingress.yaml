@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: app-three-service
+            name: app-three
             port: 
               number: 80

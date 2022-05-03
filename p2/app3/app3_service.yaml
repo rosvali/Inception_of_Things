@@ -1,7 +1,7 @@
   apiVersion: v1
   kind: Service
   metadata:
-    name: app-three-service
+    name: app-three
   spec:
     ports:
     - name: tcp
