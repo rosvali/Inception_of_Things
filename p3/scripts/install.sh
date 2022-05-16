@@ -9,7 +9,7 @@ kubectl create namespace dev
 
 echo "########## Installing argocd.. ##########"
 
-kubectl apply -n argocd -f argo.yaml
+kubectl apply -n argocd -f confs/argo.yaml
 
 echo "########## Waiting pod to be ready.. ##########"
 
@@ -17,7 +17,7 @@ kubectl -n argocd wait pod argocd-application-controller-0 --for=condition=Ready
 
 echo "########## Apply ingress.. ##########"
 
-kubectl apply -n argocd -f ingress.yaml
+kubectl apply -n argocd -f confs/ingress.yaml
 
 echo "########## Get password for argocd CLI.. ##########"
 
@@ -26,8 +26,8 @@ password=$(echo $passwordsecret | base64 --decode)
 
 echo "########## Configure application.. ##########"
 
-kubectl apply -f application.yaml -n argocd
-kubectl apply -f project.yaml -n argocd
+kubectl apply -f confs/application.yaml -n argocd
+kubectl apply -f confs/project.yaml -n argocd
 
 echo "########## Installation completed.. ##########"
 

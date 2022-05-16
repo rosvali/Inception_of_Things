@@ -4,7 +4,7 @@ metadata:
   name: app-three
 spec:
   rules:
-    http:
+  - http:
       paths:
       - path: /
         pathType: Prefix
