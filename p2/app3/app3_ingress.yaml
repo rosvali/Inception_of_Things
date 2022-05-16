@@ -1,12 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-three-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
+  name: app-three
 spec:
   rules:
-  - host: app3.com
     http:
       paths:
       - path: /

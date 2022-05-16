@@ -1,9 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: app-one-ingress
-  annotations:
-    kubernetes.io/ingress.class: traefik
+  name: app-one
 spec:
   rules:
   - host: app1.com
