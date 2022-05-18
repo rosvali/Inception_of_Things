@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   config.vbguest.installer_options = { allow_kernel_upgrade: true }
 
   NODES = [
-    { :hostname => "grobertoS", :ip => "192.168.42.110", :cpus => '2', :memory => '2024', :path => "server.sh"}
+    { :hostname => "grobertoS", :ip => "192.168.42.110", :cpus => '2', :memory => '2024', :path => "scripts/server.sh"}
   ]
 
   NODES.each do |node|
