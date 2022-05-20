@@ -4,8 +4,6 @@ metadata:
   name: argocd-ingress
   labels:
     app: argocd
-  annotations:
-    ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
   - host: localhost

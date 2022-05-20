@@ -13,7 +13,10 @@ kubectl apply -n argocd -f confs/argo.yaml
 
 echo "########## Waiting pod to be ready.. ##########"
 
-kubectl -n argocd wait pod argocd-application-controller-0 --for=condition=Ready --timeout=-1s
+# kubectl -n argocd wait pod argocd-application-controller-0 --for=condition=Ready --timeout=-1s
+
+pod=$(kubectl get pod -o name -n argocd | tail -1)
+echo $(kubectl -n argocd wait $pod --for=condition=Ready --timeout=-1s)
 
 echo "########## Apply ingress.. ##########"
 
