@@ -1,19 +1,11 @@
 apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
-  name: argocd-project
-  labels:
-    app: argocd
+  name: development
+  namespace: argocd
 spec:
-  # Project description
-  description: Our ArgoCD Project to deploy our app locally
-  # Allow manifests to deploy only from Sokube git repositories 
   sourceRepos:
-  - "https://github.com/rosvali/*"
-  # Only permit to deploy applications in the same cluster
+  - "https://github.com/rosvali/raguillo-argocd"
   destinations:
   - namespace: dev
     server: https://kubernetes.default.svc
-  # Enables namespace orphaned resource monitoring.
-  orphanedResources:
-    warn: false

@@ -1,15 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  labels:
-    app: argocd
   name: argocd-app
+  namespace: argocd
 spec:
-  project: argocd-project
+  project: development
   source:
     repoURL: https://github.com/rosvali/raguillo-argocd
     targetRevision: HEAD
-    path: app/
+    path: manifests
     directory:
       recurse: true
   destination:

@@ -9,18 +9,18 @@ kubectl create namespace dev
 
 echo "########## Installing argocd.. ##########"
 
-kubectl apply -n argocd -f confs/argo.yaml
+kubectl apply -n argocd -f /Users/rosvali/Projects/IoT/p3/confs/argo.yaml
 
 echo "########## Waiting pod to be ready.. ##########"
 
 # kubectl -n argocd wait pod argocd-application-controller-0 --for=condition=Ready --timeout=-1s
 
-pod=$(kubectl get pod -o name -n argocd | tail -1)
+pod=$(kubectl get pod -o name -n argocd | grep "argocd-server")
 echo $(kubectl -n argocd wait $pod --for=condition=Ready --timeout=-1s)
 
 echo "########## Apply ingress.. ##########"
 
-kubectl apply -n argocd -f confs/ingress.yaml
+kubectl apply -n argocd -f /Users/rosvali/Projects/IoT/p3/confs/ingress.yaml
 
 echo "########## Get password for argocd CLI.. ##########"
 
@@ -29,8 +29,8 @@ password=$(echo $passwordsecret | base64 --decode)
 
 echo "########## Configure application.. ##########"
 
-kubectl apply -f confs/application.yaml -n argocd
-kubectl apply -f confs/project.yaml -n argocd
+kubectl apply -f /Users/rosvali/Projects/IoT/p3/confs/application.yaml -n argocd
+kubectl apply -f /Users/rosvali/Projects/IoT/p3/confs/project.yaml -n argocd
 
 echo "########## Installation completed.. ##########"
 
@@ -39,4 +39,4 @@ echo "########## Pseudo: admin ##########"
 echo "########## Password: $password ##########"
 echo "########## Application: http://localhost:8888/ ##########"
 
-kubectl port-forward -n dev svc/wil-playground-service 8888
+kubectl port-forward -n dev svc/wil-playground 8888
