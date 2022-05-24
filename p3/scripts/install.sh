@@ -11,12 +11,12 @@ echo "########## Installing argocd.. ##########"
 
 kubectl apply -n argocd -f /Users/rosvali/Projects/IoT/p3/confs/argo.yaml
 
-echo "########## Waiting pod to be ready.. ##########"
+sleep 10
 
-# kubectl -n argocd wait pod argocd-application-controller-0 --for=condition=Ready --timeout=-1s
+echo "########## Waiting for pods to be ready.. ##########"
 
 pod=$(kubectl get pod -o name -n argocd | grep "argocd-server")
-echo $(kubectl -n argocd wait $pod --for=condition=Ready --timeout=-1s)
+kubectl -n argocd wait $pod --for=condition=Ready --timeout=-1s
 
 echo "########## Apply ingress.. ##########"
 
@@ -33,10 +33,14 @@ kubectl apply -f /Users/rosvali/Projects/IoT/p3/confs/application.yaml -n argocd
 kubectl apply -f /Users/rosvali/Projects/IoT/p3/confs/project.yaml -n argocd
 
 echo "########## Installation completed.. ##########"
-
-echo "########## Argocd CLI: http://localhost:8080/argocd/ ##########"
+echo "#############################################"
+echo "########## Connect to ArgoCD CLI: ##########"
+echo "########## http://localhost:8080/argocd/ ##########"
+echo "##############################################################"
 echo "########## Pseudo: admin ##########"
 echo "########## Password: $password ##########"
+echo "##############################################################"
+echo "########## Run this command after the application is set up ##########"
+echo "########## kubectl port-forward -n dev svc/wil-playground 8888 ##########"
+echo "##############################################################"
 echo "########## Application: http://localhost:8888/ ##########"
-
-kubectl port-forward -n dev svc/wil-playground 8888
