@@ -15,8 +15,10 @@ sleep 10
 
 echo "########## Waiting for pods to be ready.. ##########"
 
-pod=$(kubectl get pod -o name -n argocd | grep "argocd-server")
-kubectl -n argocd wait $pod --for=condition=Ready --timeout=-1s
+# pod=$(kubectl get pod -o name -n argocd | grep "argocd-server")
+# kubectl -n argocd wait $pod --for=condition=Ready --timeout=-1s
+
+kubectl wait --for=condition=Ready pods --all --timeout=-1s -n argocd
 
 echo "########## Apply ingress.. ##########"
 

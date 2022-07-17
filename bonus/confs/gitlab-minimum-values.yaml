@@ -1,0 +1,60 @@
+# values.yaml
+# - Minimized CPU/Memory load, can fit into 3 CPU, 6 GB of RAM (barely)
+# - Some services entirely removed, or scaled down to 1 replica.
+
+global:
+  ingress:
+    enabled: false
+    configureCertmanager: false
+    tls:
+      enabled: false
+  hosts:
+    domain: example.com
+    hostSuffix:
+    https: false
+    externalIP:
+    ssh: ~
+    gitlab:
+      name: gitlab.example.com
+      https: false
+    minio:
+      name: minio.example.com
+      https: false
+    registry:
+      name: registry.example.com
+      https: false
+    tls:
+      name: tls.example.com
+      https: false
+    smartcard:
+      name: smartcard.example.com
+      https: false
+    kas:
+      name: kas.example.com
+      https: false
+    pages:
+      name: pages.example.com
+      https: false
+
+certmanager:
+  install: false
+nginx-ingress:
+  enabled: false
+prometheus:
+  install: false
+gitlab-runner:
+  install: false
+gitlab:
+  webservice:
+    minReplicas: 1
+    maxReplicas: 1
+  sidekiq:
+    minReplicas: 1
+    maxReplicas: 1
+  gitlab-shell:
+    minReplicas: 1
+    maxReplicas: 1
+registry:
+  hpa:
+    minReplicas: 1
+    maxReplicas: 1
