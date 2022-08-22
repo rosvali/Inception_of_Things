@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: gitlab-ingress
   namespace: gitlab
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
 spec:
   rules:
   - host: gitlab.example.com

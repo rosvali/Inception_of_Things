@@ -1,13 +1,12 @@
-echo "########## Cleaning namespaces.. ##########"
+path_conf=/home/roberto/Desktop/42/iot_rosa/bonus/confs/
 
+echo "########## Cleaning namespaces.. ##########"
 kubectl delete namespace gitlab
 
 echo "########## Creating namespaces.. ##########"
-
 kubectl create namespace gitlab
 
 echo "########## Installing gitlab.. ##########"
-
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update
 
@@ -15,19 +14,22 @@ helm dependency update
 helm install gitlab gitlab/gitlab \
   --namespace gitlab \
   --timeout 600s \
-  -f /Users/rosvali/Projects/ioT/bonus/confs/gitlab-minimum-values.yaml
+  -f $path_conf/gitlab-minimum-values.yaml
 
 echo "########## Waiting for pods to be ready.. ##########"
 
-kubectl wait --for=condition=Ready pods --all --timeout=-1s -n gitlab
+pod=$(kubectl get pods -o name -n gitlab | grep "gitlab-webservice")
+kubectl -n gitlab wait $pod --for=condition=Ready --timeout=-1s
 
 echo "########## Apply ingress.. ##########"
 
-kubectl apply -n gitlab -f /Users/rosvali/Projects/IoT/bonus/confs/ingress.yaml
+kubectl apply -n gitlab -f $path_conf/ingress.yaml
 
 echo "########## Get password for gitlab.. ##########"
 
 password=$(kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o jsonpath='{.data.password}' | base64 --decode)
+
+
 
 echo "########## Installation completed.. ##########"
 echo "#############################################"

@@ -1,3 +1,6 @@
+# path_conf=/Users/rosvali/Projects/IoT/p3/confs/
+path_conf=/home/roberto/Desktop/42/iot_rosa/p3/confs
+
 echo "########## Creating cluster.. ##########"
 
 k3d cluster create iot-cluster -p 8080:80@loadbalancer
@@ -9,7 +12,7 @@ kubectl create namespace dev
 
 echo "########## Installing argocd.. ##########"
 
-kubectl apply -n argocd -f /Users/rosvali/Projects/IoT/p3/confs/argo.yaml
+kubectl apply -n argocd -f $path_conf/argo.yaml
 
 sleep 10
 
@@ -22,7 +25,7 @@ kubectl wait --for=condition=Ready pods --all --timeout=-1s -n argocd
 
 echo "########## Apply ingress.. ##########"
 
-kubectl apply -n argocd -f /Users/rosvali/Projects/IoT/p3/confs/ingress.yaml
+kubectl apply -n argocd -f $path_conf/ingress.yaml
 
 echo "########## Get password for argocd CLI.. ##########"
 
@@ -31,8 +34,8 @@ password=$(echo $passwordsecret | base64 --decode)
 
 echo "########## Configure application.. ##########"
 
-kubectl apply -f /Users/rosvali/Projects/IoT/p3/confs/application.yaml -n argocd
-kubectl apply -f /Users/rosvali/Projects/IoT/p3/confs/project.yaml -n argocd
+kubectl apply -f $path_conf/application.yaml -n argocd
+kubectl apply -f $path_conf/project.yaml -n argocd
 
 echo "########## Installation completed.. ##########"
 echo "#############################################"
