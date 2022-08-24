@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitlab-app
+  namespace: argocd
+spec:
+  project: development2
+  source:
+    repoURL: http://gitlab.example.com:8181/root/groberto_gitlab.git
+    targetRevision: HEAD
+    path: ./
+    directory:
+      recurse: true
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitlab
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

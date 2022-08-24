@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: development2
+  namespace: argocd
+spec:
+  sourceRepos:
+  - "http://gitlab.example.com:8181/root/*"
+  destinations:
+  - namespace: gitlab
+    server: https://kubernetes.default.svc

@@ -7,6 +7,7 @@ echo "########## Creating namespaces.. ##########"
 kubectl create namespace gitlab
 
 echo "########## Installing gitlab.. ##########"
+
 helm repo add gitlab https://charts.gitlab.io/
 helm repo update
 
@@ -29,16 +30,14 @@ echo "########## Get password for gitlab.. ##########"
 
 password=$(kubectl get secret gitlab-gitlab-initial-root-password -n gitlab -o jsonpath='{.data.password}' | base64 --decode)
 
-
-
 echo "########## Installation completed.. ##########"
 echo "#############################################"
+echo "########## Run this command for access gitlab ##########"
+echo "########## kubectl port-forward -n gitlab svc/gitlab-webservice-default 8181 ##########"
+echo "##############################################################"
 echo "########## Connect to Gitlab: ##########"
 echo "########## http://gitlab.example.com/ ##########"
 echo "##############################################################"
 echo "########## Pseudo: root ##########"
 echo "########## Password: $password ##########"
-echo "##############################################################"
-echo "########## Run this command after the application is set up ##########"
-echo "########## kubectl port-forward -n gitlab svc/gitlab-webservice-default 8181:443 ##########"
 echo "##############################################################"
