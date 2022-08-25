@@ -6,7 +6,7 @@ metadata:
 spec:
   project: development2
   source:
-    repoURL: http://gitlab.example.com:8181/root/groberto_gitlab.git
+    repoURL: http://192.168.42.100:8181/root/groberto-gitlab.git
     targetRevision: HEAD
     path: ./
     directory:
