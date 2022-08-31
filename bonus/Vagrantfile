@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   config.vbguest.installer_options = { allow_kernel_upgrade: true }
 
   NODES = [
-    { :hostname => "gitlabvm", :ip => "192.168.42.100", :cpus => 4, :memory => 4096, :spath =>  "install.sh"}
+    { :hostname => "gitlabvm", :ip => "192.168.42.100", :cpus => 4, :memory => 4096, :spath =>  "scripts/install.sh"}
   ]
 
   NODES.each do |node|
